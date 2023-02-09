@@ -127,6 +127,10 @@ This tutorial was created by Mohamud Sheeq
 
 Contact Mohamud :
 
-[Github] : @msheeq99
+[Github] : https://github.com/msheeq99/cs-regex-js/
+
+
 [Email] : msheeq99@outlook.com
+
+
 https://gist.github.com/msheeq99/d401100154a98132539acb7763e4f14b
