@@ -1,121 +1,132 @@
-# 17 Computer Science for JavaScript: Regex Tutorial
+# Challenge 17 Regular Expressions Tutorial
 
-## Your Task
+The purpose of this gist is to walk through what a regular expression is and how to use them. Regular Expressions (Regex) can be used when one is trying to match a certain character combination within a string. This is great for pulling out information from a given body of code as well as being used for validation. For example, this tutorial will follow an example code snippet that can be used to match an email. This tutorial will follow the different components of regular expressions. 
 
-Developers write code, but they also *write about code*. Take a moment to search the web for tutorials about any of the subjects you’ve learned so far in this course. You’re likely to find thousands of tutorials written by developers of all skill levels, including junior developers&mdash;like yourself!
 
-Your assignment this week is to create a tutorial that explains how a specific regular expression, or regex, functions by breaking down each part of the expression and describing what it does. You'll use the template provided in the starter code to create your walkthrough.
+## Summary
 
-## User Story
+The following code will be used throughout the tutorial to give specific examples for how the components of regex can be used. The following code can be used for matching emails. One use for this code is that it can be used to validate to make sure that an email follows the correct format. 
 
-```md
-AS A web development student
-I WANT a tutorial explaining a specific regex
-SO THAT I can understand the search pattern the regex defines
-```
-
-## Acceptance Criteria
-
-```md
-GIVEN a regex tutorial
-WHEN I open the tutorial
-THEN I see a descriptive title and introductory paragraph explaining the purpose of the tutorial, a summary describing the regex featured in the tutorial, a table of contents linking to different sections that break down each component of the regex and explain what it does, and a section about the author with a link to the author’s GitHub profile
-WHEN I click on the links in the table of contents
-THEN I am taken to the corresponding sections of the tutorial
-WHEN I read through each section of the tutorial
-THEN I find a detailed explanation of what a specific component of the regex does
-WHEN I reach the end of the tutorial
-THEN I find a section about the author and a link to the author’s GitHub profile
-```
-
-## What Is a Regex?
-
-A **regex**, which is short for **regular expression**, is a sequence of characters that defines a specific search pattern. When included in code or search algorithms, regular expressions can be used to find certain patterns of characters within a string, or to find and replace a character or sequence of characters within a string. They are also frequently used to validate input. 
-
-For example, the following regular expression can be used to verify that user input is a valid email address:
+Matching Email-
 
 `/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/`
 
-Each component of this regex has a unique responsibility to make sure that a user enters an email address that begins with an unspecified number of characters preceding the `@` symbol, followed by a domain.
+## Table of Contents
 
-Before you get started, watch this [introduction to regular expressions video](https://youtu.be/7DG3kCDx53c) and read [Regex Tutorial: Matching a Username](https://coding-boot-camp.github.io/full-stack/computer-science/regex-tutorial) to learn how to identify the different components that make up a regex. If you need any additional help, there are many resources on the web. Feel free to do your own research to find one that can help you complete this assignment.
+- [Anchors](#anchors)
+- [Quantifiers](#quantifiers)
+- [OR Operator](#or-operator)
+- [Character Classes](#character-classes)
+- [Flags](#flags)
+- [Grouping and Capturing](#grouping-and-capturing)
+- [Bracket Expressions](#bracket-expressions)
+- [Greedy and Lazy Match](#greedy-and-lazy-match)
+- [Boundaries](#boundaries)
+- [Back-references](#back-references)
+- [Look-ahead and Look-behind](#look-ahead-and-look-behind)
 
-Once you have a better understanding of what these different parts of a regular expression do, you’ll need to explain what they do for a specific regex.
+## Regex Components
 
-You can choose one of the following regular expressions or you can choose one that you found on your own (with the exception of the one that is covered in the [Regex Tutorial: Matching a Username](https://coding-boot-camp.github.io/full-stack/computer-science/regex-tutorial):
+### Anchors
 
-* Matching a Hex Value: `/^#?([a-f0-9]{6}|[a-f0-9]{3})$/`
+The anchor is what starts and ends the regular expression. 
+In the matching email code, 
 
-* Matching an Email: `/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/`
+`/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/`, 
 
-* Matching a URL: `/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/`
+the anchors are the `^` and the `$`. This code specifically is saying that we are looking for something that starts with 
 
-* Matching an HTML Tag: `/^<([a-z]+)([^<]+)*(?:>(.*)<\/\1>|\s+\/>)$/`
+`^([a-z0-9_\.-]+)` 
 
-## Getting Started
+we will define what everything inside the parentheses later in this tutorial, but what the anchor means is that if we are to find a match it has follow those initial guidelines. It also has to end with 
 
-Instead of creating a repository, you’ll publish a GitHub gist. GitHub describes a **gist** as a simple way to share code snippets with others. It’s also an ideal way to demonstrate a technique, teach a principle, or show off a solution. It functions just like a repository, and you’ll use Markdown to create it, just as you do with your READMEs. Gists can include code, images, links, and anything else you can include in a README.
+`.([a-z\.]{2,6})$`.
 
-After you’ve downloaded the starter code, learn [how to create a gist](https://help.github.com/en/github/writing-on-github/creating-gists). You can also watch this [video on how to use gists](https://www.youtube.com/watch?v=wc2NlcWjQHw).
+So, it must start and end with the given parameters within the code. If it does not, then it is not a match. 
 
-> **Important**: Make sure to create a **public** gist and add the `.md` file extension to the file name so that your Markdown renders correctly.
+### Quantifiers
 
-The starter code is a template with a title, introductory paragraph, summary, and table of contents. The table of contents should link to sections of the tutorial that describe the functionality of each component in the regex. Be sure to rename the template to a unique name that describes your tutorial.
+A quantifier is used to determine how many times a specific character or group of characters needs to be present in order to have a match. For instance, if we used the following code in our regex, `xyz+` then this will match any string xy followed by at least one z. So, if we look at our code for matching the email:
 
-> **Note**: The regular expression that you choose might not include all of the components outlined in the starter code. After you’ve finished your walkthrough, you can remove any sections that you didn’t use.
+`([a-z0-9_\.-]+)` 
 
-Each section that describes a component should include more than just one sentence explaining what it does. It should also include a code snippet of that particular component and some examples that meet the requirements of that component.
+this will match any string that contains a-z, 0-9, _, ., or -. The quantifier `+` means that it has to contain at least one of this in order to have a match. 
 
-> **Important**: Make revisions to your gist in the GitHub gist UI. This will create a revision history that graders can use to verify that the tutorial content is yours.
+### OR Operator
 
-## Grading Requirements
+It is not present in the code for the given matching email code, but in order to talk about the OR Operator, we will look at the following code for matching a hex code. 
 
-> **Note**: If a Challenge assignment submission is marked as “0”, it is considered incomplete and will not count towards your graduation requirements. Examples of incomplete submissions include the following:
->
-> * A repository that has no code
->
-> * A repository that includes a unique name but nothing else
->
-> * A repository that includes only a README file but nothing else
->
-> * A repository that only includes starter code
+`/^#?([a-f0-9]{6}|[a-f0-9]{3})$/`
 
-This Challenge is graded based on the following criteria:
+This is a regex for matching a hex code that uses the OR Operator. 
+What this will do is it will match where it starts with the `#` and that has to come first followed by one of the following:
 
-### Deliverables: 30%
+`[a-f0-9]{6}` which will match a 6 character long string that contains a combination of a-f letters and 0-9 numbers. 
 
-* A valid URL of your GitHub gist.
+`|` OR Operator
 
-* Your GitHub gist that contains the tutorial Markdown. Your gist must include the `.md` file extension so that your Markdown renders correctly.
+`[a-f0-9]{3}` it will match a 3 character long string that contains a combination of a-f letters and 0-9 numbers. 
 
-### Technical Acceptance Criteria: 50%
+### Character Classes
+`\d` is present in the given matching email code and what it will match a single letter character, a-z, after the `@` sign in the email address. Basically ensuring that a letter is matched after the `@` in the email and not a number or special character.  
+### Flags
+A regex flag is not used in the matching email code that is being used for this tutorial. A regular expression typically comes in the form:
 
-* Satisfies all of the above acceptance criteria plus the following:
+`/regex/` 
 
-    * Revisions to the tutorial must be made in the GitHub gist UI so that graders have access to your revision history.
+Where the slashes denote where the regular expresssion starts and ends. A flag can be used after the slash to give more guidelines for our matching. The flags are:
 
-    * The tutorial must cover one of the regex examples listed above or another of your choice. You may NOT use the regex covered in the [Regex Tutorial: Matching a Username](https://coding-boot-camp.github.io/full-stack/computer-science/regex-tutorial).
+* g which stands for "global" which will allow for matching all the instances within a string that follow the matching guidelines set in the regular expression.
+* m which stands for "multiline" which will search line by line rather than searching through a string as a whole. 
+* i which stands for "insensitive" will make the 
+regular expression case-insensitive, so capitals and lower-case letters will not deture the matching. 
+### Grouping and Capturing
+Contininuing with the code for matching an email:
 
-    * The tutorial must include sections that correspond to each of the components that make up the regex. You may not need to use all of the sections included in the starter code, but you should include all of the sections that correspond to the different components of the regex you chose.
+`/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/`
 
-    * Each section that describes a component must include more than just one sentence explaining what it does. It’s okay to use online resources for assistance, but do not copy and paste; explain each component in your own words and be thorough.
+We can talk about grouping and capturing.
+`([a-z0-9_\.-]+)` is the first group that appears in our regex. This must be true before moving on to "match" the next part of the code. 
+`([\da-z\.-]+)` is the second group that appears in our regex. `([a-z\.]{2,6})` is the third group that appears in our regex. 
 
-    * Each section that describes a component must include a code snippet of that particular component. Use backticks to display your code snippets in Markdown.
+When matching, we have to make sure we are following the guidelines of the group before moving on to the next group. 
+### Bracket Expressions
+Contininuing with the code for matching an email:
 
-    * Each section that describes a component must include at least one example that meets the requirements of that component.
+`/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/`
 
-### Tutorial Clarity and Quality: 20%
+We can talk about grouping and capturing.
 
-* Tutorial provides a clear explanation of how the regex works. Be as concise as possible.
+`[a-z0-9_\.-]`
 
-* Tutorial describes each regex component in a separate section.
 
-## Review
+The guidelines for matching the group. 
+For this code snippet, it can contain letters a-z, numbers 0-9, an underscore, hyphen, or period. 
 
-You are required to submit the following for review:
+The period is an escaped character, so it required the backslash in order to be able to be matched. 
 
-* The URL of the GitHub gist. Give the gist a unique name.
+### Greedy and Lazy Match
 
----
+In the given code for matching an email, there isn't a greedy or lazy match included. 
 
-© 2023 edX Boot Camps LLC. Confidential and Proprietary. All Rights Reserved.
+### Boundaries
+
+If in a string, we are looking for for specific words. Boundaries are not used in the given matching an email code. 
+
+### Back-references
+
+Back-references are not included in the given code. 
+
+### Look-ahead and Look-behind
+
+If using a look-ahead or look-behind, then it has to match in a certain order. It is not being used in the given matching an email code. 
+
+## Author
+
+This tutorial was created by Mohamud Sheeq
+
+Contact Mohamud :
+
+[Github] : @msheeq99
+[Email] : msheeq99@outlook.com
+https://gist.github.com/msheeq99/d401100154a98132539acb7763e4f14b
